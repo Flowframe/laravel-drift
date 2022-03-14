@@ -1,0 +1,32 @@
+{
+    "name": "flowframe/laravel-drift",
+    "type": "library",
+    "license": "MIT",
+    "homepage": "https://github.com/flowframe/laravel-drift",
+    "autoload": {
+        "psr-4": {
+            "Flowframe\\Drift\\": "src"
+        }
+    },
+    "authors": [
+        {
+            "name": "Lars Klopstra",
+            "email": "lars@flowframe.nl"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "illuminate/support": "^9.4",
+        "intervention/image": "^2.7",
+        "illuminate/http": "^9.4"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Flowframe\\Drift\\DriftServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
