@@ -10,6 +10,12 @@ use Intervention\Image\Facades\Image;
 
 class ImagesController
 {
+    public function __construct(
+        public DriftManager $driftManager,
+        public ManipulationsTransformer $manipulationsTransformer,
+    ) {
+    }
+
     public function __invoke(
         string $configName,
         string $manipulations,
@@ -18,7 +24,7 @@ class ImagesController
         $signature = request('signature');
 
         /** @var \Flowframe\Drift\Config|null $config */
-        $config = app(DriftManager::class)
+        $config = $this->driftManager
             ->configs()
             ->firstWhere('name', $configName);
 
@@ -28,8 +34,8 @@ class ImagesController
             'Config not found',
         );
 
-        /** @var \Flowframe\Drift\CachingStrategies\BaseCachingStrategy $cachingStrategy */
-        $cachingStrategy = app($config->cachingStrategy);
+        /** @var \Flowframe\Drift\Contracts\CachingStrategy $cachingStrategy */
+        $cachingStrategy = new $config->cachingStrategy();
 
         if ($cachingStrategy->validate($path, $signature, $config)) {
             $cachedImage = $cachingStrategy->resolve($path, $signature, $config);
@@ -51,10 +57,7 @@ class ImagesController
             Storage::disk($config->filesystemDisk)->get($path),
         );
 
-        /** @var \Flowframe\Drift\ManipulationsTransformer $transformer */
-        $transformer = app(ManipulationsTransformer::class);
-
-        foreach ($transformer->decode($manipulations) as $method => $arguments) {
+        foreach ($this->manipulationsTransformer->decode($manipulations) as $method => $arguments) {
             is_array($arguments)
                 ? $image->{$method}(...$arguments)
                 : $image->{$method}($arguments);

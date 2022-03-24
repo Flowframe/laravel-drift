@@ -3,10 +3,11 @@
 namespace Flowframe\Drift\CachingStrategies;
 
 use Flowframe\Drift\Config;
+use Flowframe\Drift\Contracts\CachingStrategy;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Image;
 
-class FilesystemCachingStrategy extends BaseCachingStrategy
+class FilesystemCachingStrategy implements CachingStrategy
 {
     public function validate(string $path, string $signature, Config $config): bool
     {
