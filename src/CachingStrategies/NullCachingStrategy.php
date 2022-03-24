@@ -3,9 +3,10 @@
 namespace Flowframe\Drift\CachingStrategies;
 
 use Flowframe\Drift\Config;
+use Flowframe\Drift\Contracts\CachingStrategy;
 use Intervention\Image\Image;
 
-class NullCachingStrategy extends BaseCachingStrategy
+class NullCachingStrategy implements CachingStrategy
 {
     public function validate(string $path, string $signature, Config $config): bool
     {
