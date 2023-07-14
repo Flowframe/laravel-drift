@@ -16,9 +16,9 @@
     ],
     "require": {
         "php": "^8.0",
-        "illuminate/support": "^9.4",
+        "illuminate/support": "^10.0",
         "intervention/image": "^2.7",
-        "illuminate/http": "^9.4"
+        "illuminate/http": "^10.0"
     },
     "extra": {
         "laravel": {
